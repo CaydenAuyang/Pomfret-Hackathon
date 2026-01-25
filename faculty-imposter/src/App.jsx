@@ -112,8 +112,21 @@ function ScorePopup({ points, position, color }) {
 function RouletteScreen({ imagePool, onSpinComplete, allImagesUsed, onEndGame }) {
     const [isSpinning, setIsSpinning] = useState(false)
     const [animationDuration, setAnimationDuration] = useState(20)
-    // Duplicate pool for infinite scroll illusion
-    const displayImages = [...imagePool, ...imagePool, ...imagePool, ...imagePool]
+
+    // --- ROULETTE LOGIC ---
+    // Start in the middle of a massive duplication to ensure content on both sides
+    const sets = 10
+    const displayImages = Array(sets).fill(imagePool).flat()
+
+    // Desktop metrics (w-80 = 320px, gap-6 = 24px)
+    const CARD_WIDTH = 320
+    const GAP = 24
+    const STRIDE = CARD_WIDTH + GAP
+    const START_INDEX = Math.floor(displayImages.length / 2) // Start in the middle
+
+    // Calculate exact offset to center the target item
+    // We want the center of item at START_INDEX to be at x=0 relative to the centered container
+    const initialX = -(START_INDEX * STRIDE + (CARD_WIDTH / 2))
 
     const handleSpin = () => {
         if (imagePool.length === 0) return
@@ -126,8 +139,14 @@ function RouletteScreen({ imagePool, onSpinComplete, allImagesUsed, onEndGame })
         setTimeout(() => setAnimationDuration(15), 2000)
 
         setTimeout(() => {
+            // Pick a winner
             const randomIndex = Math.floor(Math.random() * imagePool.length)
             const selectedImage = imagePool[randomIndex]
+
+            // To land on the specific image, we need to calculate where it is relative to our current drift
+            // For simplicity in this version, we just stop and show the result, 
+            // but to make it smooth we would snap to the nearest instance of this image.
+
             setIsSpinning(false)
             setAnimationDuration(20)
             onSpinComplete(selectedImage)
@@ -191,17 +210,20 @@ function RouletteScreen({ imagePool, onSpinComplete, allImagesUsed, onEndGame })
             </div>
 
             {/* ROULETTE STRIP */}
-            <div className="relative z-10 flex-1 flex flex-col justify-center -mt-20">
-                <div className="w-full bg-black/40 border-y-4 border-[#30363d] shadow-[0_0_50px_rgba(0,0,0,0.5)] backdrop-blur-sm relative py-8 group">
-                    {/* Center Highlight Marker */}
-                    <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-[#38fedc] z-20 shadow-[0_0_15px_#38fedc]"></div>
-                    <div className="absolute left-1/2 top-4 -translate-x-1/2 text-[#38fedc] text-2xl z-20">▼</div>
-                    <div className="absolute left-1/2 bottom-4 -translate-x-1/2 text-[#38fedc] text-2xl z-20">▲</div>
+            <div className="relative z-10 flex-1 flex flex-col justify-center -mt-20 overflow-hidden">
+                <div className="w-full h-80 bg-black/40 border-y-4 border-[#30363d] shadow-[0_0_50px_rgba(0,0,0,0.5)] backdrop-blur-sm relative flex items-center justify-center group">
 
-                    <div className="overflow-hidden">
+                    {/* Center Highlight Marker (Fixed in center of screen) */}
+                    <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-[#38fedc] z-30 shadow-[0_0_15px_#38fedc] -translate-x-1/2"></div>
+                    <div className="absolute left-1/2 top-4 -translate-x-1/2 text-[#38fedc] text-2xl z-30">▼</div>
+                    <div className="absolute left-1/2 bottom-4 -translate-x-1/2 text-[#38fedc] text-2xl z-30">▲</div>
+
+                    {/* Moving Strip Container - Absolute Positioned to Center */}
+                    <div className="absolute left-1/2 h-60 flex items-center">
                         <motion.div
-                            className="flex gap-6 pl-[50vw]" // Start centered
-                            animate={isSpinning ? { x: [0, -4000] } : { x: 0 }}
+                            className="flex gap-6"
+                            initial={{ x: initialX }}
+                            animate={isSpinning ? { x: [initialX, initialX - 5000] } : { x: initialX }}
                             transition={{
                                 duration: animationDuration,
                                 ease: 'linear',
@@ -209,7 +231,7 @@ function RouletteScreen({ imagePool, onSpinComplete, allImagesUsed, onEndGame })
                             }}
                         >
                             {displayImages.map((image, index) => (
-                                <div key={`${image.id}-${index}`} className="flex-shrink-0 w-64 h-48 bg-[#161b22] border-2 border-[#30363d] rounded-xl overflow-hidden shadow-xl transform transition-transform md:w-80 md:h-60 relative">
+                                <div key={`${image.id}-${index}`} className="flex-shrink-0 w-80 h-60 bg-[#161b22] border-2 border-[#30363d] rounded-xl overflow-hidden shadow-xl relative">
                                     <img src={image.url} alt={image.name} className="w-full h-full object-cover opacity-80" />
                                     <div className="absolute bottom-0 inset-x-0 bg-black/60 p-2 text-center font-bangers text-gray-300 tracking-wider">
                                         {image.name}
