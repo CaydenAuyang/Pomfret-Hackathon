@@ -2,13 +2,16 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import confetti from 'canvas-confetti'
 
-// Generate placeholder images with Among Us style
+// Faculty images from public folder
 const generateImages = () => {
-    return Array.from({ length: 15 }, (_, i) => ({
-        id: i + 1,
-        url: `https://placehold.co/600x400/1a1a3e/38fedc?text=Faculty+${i + 1}&font=montserrat`,
-        name: `Faculty ${i + 1}`
-    }))
+    const baseUrl = import.meta.env.BASE_URL;
+    return [
+        { id: 1, url: `${baseUrl}images/faculty-1.jpg`, name: 'Dr. Cards' },
+        { id: 2, url: `${baseUrl}images/faculty-2.jpg`, name: 'Prof. Puzzle' },
+        { id: 3, url: `${baseUrl}images/faculty-3.jpg`, name: 'Gumball Wizard' },
+        { id: 4, url: `${baseUrl}images/faculty-4.jpg`, name: 'Monsieur Bread' },
+        { id: 5, url: `${baseUrl}images/faculty-5.jpg`, name: 'Fire Chief' },
+    ];
 }
 
 // Initial players with Among Us colors
@@ -340,11 +343,9 @@ function GameScreen({ selectedImage, players, onScore, onNextImage, onEndGame, i
                     <span className="font-bangers text-xl text-gray-200 tracking-wider">FACULTY IMPOSTER</span>
                 </div>
 
-                <div className="absolute left-1/2 -translate-x-1/2 bg-black/40 px-6 py-1 rounded-full border border-[#30363d]">
-                    <span className="font-outfit text-sm text-gray-400 uppercase tracking-widest">
-                        Round {16 - imagePool.length} / 15
-                    </span>
-                </div>
+                <span className="font-outfit text-sm text-gray-400 uppercase tracking-widest">
+                    Round {6 - imagePool.length} / 5
+                </span>
 
                 <button onClick={onEndGame} className="text-red-500 hover:text-red-400 font-bold text-sm tracking-wider uppercase transition-colors">
                     End Game
