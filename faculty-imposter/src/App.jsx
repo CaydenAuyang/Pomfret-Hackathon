@@ -11,6 +11,9 @@ const generateImages = () => {
         { id: 3, url: `${baseUrl}images/faculty-3.jpg`, name: 'Gumball Wizard' },
         { id: 4, url: `${baseUrl}images/faculty-4.jpg`, name: 'Monsieur Bread' },
         { id: 5, url: `${baseUrl}images/faculty-5.jpg`, name: 'Fire Chief' },
+        { id: 6, url: `${baseUrl}images/faculty-6.jpg`, name: 'Lion Tamer' },
+        { id: 7, url: `${baseUrl}images/faculty-7.jpg`, name: 'The Lorax' },
+        { id: 8, url: `${baseUrl}images/faculty-8.jpg`, name: 'Pug Chemist' },
     ];
 }
 
@@ -366,7 +369,7 @@ function GameScreen({ selectedImage, players, onScore, onNextImage, onEndGame, i
                 </div>
 
                 <span className="font-outfit text-sm text-gray-400 uppercase tracking-widest">
-                    Round {6 - imagePool.length} / 5
+                    Round {9 - imagePool.length} / 8
                 </span>
 
                 <button onClick={onEndGame} className="text-red-500 hover:text-red-400 font-bold text-sm tracking-wider uppercase transition-colors">
