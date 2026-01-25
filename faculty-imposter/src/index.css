@@ -1,0 +1,225 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --au-red: #c51111;
+  --au-cyan: #38fedc;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: #0d1117;
+  color: #d1d5db;
+  overflow: hidden;
+}
+
+.title-font {
+  font-family: 'Bangers', cursive;
+  letter-spacing: 2px;
+}
+
+.font-bangers {
+  font-family: 'Bangers', cursive;
+}
+
+.font-outfit {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Starfield */
+.starfield {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at center, #1b2838 0%, #0d1117 100%);
+}
+
+.stars-layer {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 10px 10px, white, transparent),
+    radial-gradient(1px 1px at 50px 80px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(2px 2px at 120px 40px, rgba(255, 255, 255, 0.6), transparent);
+  background-size: 400px 400px;
+  opacity: 0.6;
+}
+
+/* Premium Glass Panel */
+.glass-panel {
+  background: rgba(22, 27, 34, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+}
+
+/* 3D Shiny Red Button */
+.au-button-3d-red {
+  background: linear-gradient(180deg, #ff4444 0%, #cc0000 100%);
+  color: white;
+  font-family: 'Bangers', cursive;
+  font-size: 2rem;
+  padding: 1rem 4rem;
+  border: none;
+  border-radius: 60px;
+  box-shadow:
+    0 10px 0 #8b0000,
+    0 20px 20px rgba(0, 0, 0, 0.4),
+    inset 0 4px 8px rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.1s;
+  letter-spacing: 2px;
+}
+
+.au-button-3d-red::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), transparent);
+  border-radius: 60px 60px 0 0;
+}
+
+.au-button-3d-red:active {
+  transform: translateY(6px);
+  box-shadow:
+    0 4px 0 #8b0000,
+    inset 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Shiny Purple Button */
+.au-button-shiny-purple {
+  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+  color: white;
+  font-family: 'Bangers', cursive;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+  border-radius: 12px;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+.au-button-shiny-purple:hover {
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.6);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Action Buttons (Mini) */
+.au-action-btn {
+  display: flex;
+  align-items: center;
+  border: none;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.au-action-btn .icon {
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.2);
+  font-size: 1.2rem;
+}
+
+.au-action-btn .content {
+  padding: 6px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1;
+}
+
+.au-action-btn .val {
+  font-family: 'Bangers', cursive;
+  font-size: 1.2rem;
+}
+
+.au-action-btn .lbl {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  opacity: 0.8;
+}
+
+/* Button Colors */
+.au-btn-cyan.au-action-btn:hover {
+  background: rgba(56, 254, 220, 0.1);
+  border-color: #38fedc;
+}
+
+.au-btn-cyan .val {
+  color: #38fedc;
+}
+
+.au-btn-pink.au-action-btn:hover {
+  background: rgba(237, 84, 186, 0.1);
+  border-color: #ed54ba;
+}
+
+.au-btn-pink .val {
+  color: #ed54ba;
+}
+
+.au-btn-lime.au-action-btn:hover {
+  background: rgba(80, 239, 57, 0.1);
+  border-color: #50ef39;
+}
+
+.au-btn-lime .val {
+  color: #50ef39;
+}
+
+
+/* Text Utilities */
+.text-stroke-black {
+  -webkit-text-stroke: 1.5px black;
+  paint-order: stroke fill;
+}
+
+/* Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #58a6ff;
+}
+
+/* Animations */
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(56, 254, 220, 0.2);
+  }
+
+  50% {
+    box-shadow: 0 0 25px rgba(56, 254, 220, 0.5);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s infinite;
+}
